@@ -12,6 +12,7 @@ Estas instruções fornecerão uma cópia do projeto em execução na sua máqui
 * Git
 * Go
 * VSCode
+* Docker
 
 ```bash
 Exemplo:
