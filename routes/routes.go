@@ -4,9 +4,12 @@ import (
 	"myapp/middlewares"
 
 	"github.com/gin-gonic/gin"
+
 )
 
 func RegisterRoutes(server *gin.Engine) {
+
+
 	//events
 	authenticated := server.Group("/")
 	authenticated.Use(middlewares.Authenticate)

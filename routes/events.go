@@ -7,6 +7,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Get Events godoc
+// @Summary    Get Events
+// @Description It fetches and return all events stored in database
+// @Param Authorization header string true "Authorization token"
+// @Produce application/json
+// @Tags Events
+// @Success 200 {array} models.Event "An array of events"
+// @Router /events [get]
 func getEvents(context *gin.Context) {
 	events, err := models.GetAllEvents()
 	if err != nil {
@@ -16,6 +24,16 @@ func getEvents(context *gin.Context) {
 	context.JSON(200, events)
 }
 
+// Create Users   godoc
+// @Summary    Create Users
+// @Description It creates and return all users stored in database
+// @Param Authorization header string true "Authorization token"
+// @Accept json
+// @Produce application/json
+// @Param events body []models.Event true "Array of Event objects to be created"
+// @Tags Events
+// @Success 201
+// @Router /events [Post]
 func createEvent(context *gin.Context) {
 	var event models.Event
 	err := context.ShouldBindJSON(&event)
@@ -37,6 +55,15 @@ func createEvent(context *gin.Context) {
 	context.JSON(201, gin.H{"message": "Event created", "event": event})
 }
 
+// Get User   godoc
+// @Summary    Get User
+// @Description It fetches and return by id user stored in database
+// @Param Authorization header string true "Authorization token"
+// @Param id path int true "Event ID"
+// @Produce application/json
+// @Tags Events
+// @Success 200
+// @Router /events/:id [get]
 func getEvent(context *gin.Context) {
 	eventId, err := strconv.ParseInt(context.Param("id"), 10, 64)
 
@@ -55,6 +82,15 @@ func getEvent(context *gin.Context) {
 	context.JSON(200, event)
 }
 
+// Update User   godoc
+// @Summary    Update User
+// @Description It updates user stored in database
+// @Param Authorization header string true "Authorization token"
+// @Param id path int true "Event ID"
+// @Produce application/json
+// @Tags Events
+// @Success 200
+// @Router /events/:id  [put]
 func updateEvent(context *gin.Context) {
 	eventId, err := strconv.ParseInt(context.Param("id"), 10, 64)
 
@@ -94,6 +130,15 @@ func updateEvent(context *gin.Context) {
 	context.JSON(200, gin.H{"message": "Event updated succesfully"})
 }
 
+// Delete User   godoc
+// @Summary    Delete User
+// @Description It deletes user stored in database
+// @Param Authorization header string true "Authorization token"
+// @Param id path int true "Event ID"
+// @Produce application/json
+// @Tags Events
+// @Success 200
+// @Router /events/:id [delete]
 func deleteEvent(context *gin.Context) {
 	eventId, err := strconv.ParseInt(context.Param("id"), 10, 64)
 

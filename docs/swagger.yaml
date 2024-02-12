@@ -1,0 +1,271 @@
+basePath: /api
+definitions:
+  models.Event:
+    properties:
+      dateTime:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      location:
+        type: string
+      name:
+        type: string
+      userId:
+        type: integer
+    required:
+    - dateTime
+    - description
+    - location
+    - name
+    type: object
+  models.User:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: A CRUD User API in go using gin framework
+  title: CRUD User API
+  version: "1.0"
+paths:
+  /events:
+    get:
+      description: It fetches and return all events stored in database
+      parameters:
+      - description: Authorization token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: An array of events
+          schema:
+            items:
+              $ref: '#/definitions/models.Event'
+            type: array
+      summary: Get Events
+      tags:
+      - Events
+    post:
+      consumes:
+      - application/json
+      description: It creates and return all users stored in database
+      parameters:
+      - description: Authorization token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Array of Event objects to be created
+        in: body
+        name: events
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/models.Event'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+      summary: Create Users
+      tags:
+      - Events
+  /events/:id:
+    delete:
+      description: It deletes user stored in database
+      parameters:
+      - description: Authorization token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Event ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Delete User
+      tags:
+      - Events
+    get:
+      description: It fetches and return by id user stored in database
+      parameters:
+      - description: Authorization token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Event ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Get User
+      tags:
+      - Events
+    put:
+      description: It updates user stored in database
+      parameters:
+      - description: Authorization token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Event ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Update User
+      tags:
+      - Events
+  /events/cancel/{id}:
+    post:
+      consumes:
+      - application/json
+      description: Cancels a user's registration for an event by their IDs
+      parameters:
+      - description: Authorization token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Event ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully cancelled
+          schema:
+            type: object
+        "500":
+          description: Error message
+          schema:
+            type: object
+      summary: Cancel event registration
+      tags:
+      - Log
+  /events/register/{id}:
+    post:
+      consumes:
+      - application/json
+      description: Registers a user for an event by their IDs
+      parameters:
+      - description: Authorization token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Event ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Successfully registered
+          schema:
+            type: object
+        "500":
+          description: Error message
+          schema:
+            type: object
+      summary: Register for an event
+      tags:
+      - Log
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate a user and return a token
+      parameters:
+      - description: User data for registration
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Login successful, token returned
+          schema:
+            type: object
+        "400":
+          description: Could not parse data
+          schema:
+            type: object
+        "401":
+          description: Invalid credentials
+          schema:
+            type: object
+      summary: User login
+      tags:
+      - Users
+  /signup:
+    post:
+      consumes:
+      - application/json
+      description: It creates a new user in the database
+      parameters:
+      - description: User data for registration
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Could not parse data
+          schema:
+            type: object
+        "500":
+          description: Could not create user, try again later
+          schema:
+            type: object
+      summary: Register a new user
+      tags:
+      - Users
+swagger: "2.0"
