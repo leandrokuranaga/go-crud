@@ -17,5 +17,5 @@ Estas instruções fornecerão uma cópia do projeto em execução na sua máqui
 Exemplo:
 git clone https://github.com/leandrokuranaga/go-crud.git
 cd go-crud
-go run main.go
+go run cmd/main.go
 ```

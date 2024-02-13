@@ -1,7 +1,7 @@
 package middlewares
 
 import (
-	"myapp/utils"
+	"myapp/internal/utils"
 
 	"github.com/gin-gonic/gin"
 )

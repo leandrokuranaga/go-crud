@@ -11,7 +11,7 @@ import (
 
 var DB *sql.DB
 
-func InitDb() {
+func InitDb() (*sql.DB, error) {
 	if err := godotenv.Load(); err != nil {
 		log.Fatalf("Error loading .env file: %v", err)
 	}
@@ -35,6 +35,7 @@ func InitDb() {
 	DB.SetConnMaxIdleTime(5)
 
 	createTables()
+	return DB, nil
 }
 
 func createTables() {
